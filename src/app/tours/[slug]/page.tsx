@@ -66,7 +66,7 @@ export default async function TourDetailPage({ params }: { params: { slug: strin
   }
 
   const itinerary = Array.isArray(tour.itinerary) ? tour.itinerary : []
-  const highlights = Array.isArray(tour.highlights) ? tour.highlights : []
+  const highlights = Array.isArray(tour.highlights) ? tour.highlights.filter((h): h is string => typeof h === 'string') : []
 
   return (
     <div>

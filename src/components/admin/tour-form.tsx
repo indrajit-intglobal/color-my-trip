@@ -177,8 +177,8 @@ export function TourForm({ tour }: { tour?: Tour | null }) {
         ...formData,
         basePrice: parseFloat(formData.basePrice as string),
         discountPrice: formData.discountPrice ? parseFloat(formData.discountPrice as string) : null,
-        durationDays: itinerary.length > 0 ? itinerary.length : parseInt(formData.durationDays as string),
-        maxGroupSize: parseInt(formData.maxGroupSize as string),
+        durationDays: itinerary.length > 0 ? itinerary.length : Number(formData.durationDays),
+        maxGroupSize: Number(formData.maxGroupSize),
         highlights: formData.highlights.split('\n').filter((h) => h.trim()),
         itinerary: itinerary,
         images: images.map((img, index) => ({

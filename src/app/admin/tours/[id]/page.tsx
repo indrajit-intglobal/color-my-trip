@@ -25,10 +25,19 @@ export default async function EditTourPage({ params }: { params: { id: string } 
     notFound()
   }
 
+  // Convert Prisma types to JavaScript types for the component
+  const tourForForm = {
+    ...tour,
+    basePrice: Number(tour.basePrice),
+    discountPrice: tour.discountPrice ? Number(tour.discountPrice) : null,
+    itinerary: Array.isArray(tour.itinerary) ? tour.itinerary : [],
+    highlights: Array.isArray(tour.highlights) ? tour.highlights : [],
+  }
+
   return (
     <div>
       <h1 className="text-3xl font-bold mb-8">Edit Tour</h1>
-      <TourForm tour={tour} />
+      <TourForm tour={tourForForm} />
     </div>
   )
 }

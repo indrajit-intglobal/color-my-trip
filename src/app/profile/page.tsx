@@ -41,6 +41,12 @@ export default async function ProfilePage() {
 
   const bookings = await getUserBookings(session.user.id)
 
+  // Convert Prisma Decimal to number for the component
+  const bookingsForComponent = bookings.map(booking => ({
+    ...booking,
+    totalAmount: Number(booking.totalAmount),
+  }))
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-brand-light via-white to-brand-beige">
       {/* Header Section */}
@@ -60,7 +66,7 @@ export default async function ProfilePage() {
           </div>
 
           {/* Right Column - Bookings */}
-          <UserBookings bookings={bookings} />
+          <UserBookings bookings={bookingsForComponent} />
         </div>
       </div>
     </div>

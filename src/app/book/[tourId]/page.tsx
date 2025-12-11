@@ -36,10 +36,17 @@ export default async function BookPage({ params }: { params: { tourId: string } 
     notFound()
   }
 
+  // Convert Prisma Decimal to number for the component
+  const tourForBooking = {
+    ...tour,
+    basePrice: Number(tour.basePrice),
+    discountPrice: tour.discountPrice ? Number(tour.discountPrice) : null,
+  }
+
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Book Your Trip</h1>
-      <BookingFlow tour={tour} />
+      <BookingFlow tour={tourForBooking} />
     </div>
   )
 }

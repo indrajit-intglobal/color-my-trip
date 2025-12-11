@@ -113,10 +113,10 @@ export default async function ConfirmationPage({ params }: { params: { id: strin
                     <i className="fa-solid fa-clock text-brand-green"></i>
                     <span>{duration} {duration === 1 ? 'Day' : 'Days'}</span>
                   </div>
-                  {booking.tour.averageRating > 0 && (
+                  {(booking.tour as any).averageRating > 0 && (
                     <div className="flex items-center gap-2">
                       <i className="fa-solid fa-star text-yellow-400"></i>
-                      <span>{booking.tour.averageRating.toFixed(1)} Rating</span>
+                      <span>{((booking.tour as any).averageRating || 0).toFixed(1)} Rating</span>
                     </div>
                   )}
                 </div>

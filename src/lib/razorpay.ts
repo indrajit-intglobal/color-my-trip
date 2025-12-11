@@ -56,12 +56,12 @@ export async function createRazorpayOrder(
     amount: Math.round(amount * 100), // Convert to paise (smallest currency unit)
     currency,
     receipt: receipt || `receipt_${Date.now()}`,
-    payment_capture: 1, // Auto capture payment
+    payment_capture: true, // Auto capture payment
   })
 
   return {
     id: order.id,
-    amount: order.amount / 100, // Convert back to rupees
+    amount: Number(order.amount) / 100, // Convert back to rupees
     currency: order.currency,
     receipt: order.receipt,
     status: order.status,
@@ -106,7 +106,7 @@ export async function verifyRazorpayPayment(
       payment: {
         id: payment.id,
         order_id: payment.order_id,
-        amount: payment.amount / 100,
+        amount: Number(payment.amount) / 100,
         currency: payment.currency,
         status: payment.status,
         method: payment.method,

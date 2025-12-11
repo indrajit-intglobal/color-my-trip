@@ -80,9 +80,9 @@ export function ProfileForm() {
       <div className="relative h-32 bg-gradient-to-r from-brand-green to-green-700">
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2">
           <div className="w-24 h-24 rounded-full bg-white border-4 border-white shadow-lg flex items-center justify-center overflow-hidden">
-            {session?.user?.image ? (
+            {(session?.user as any)?.image ? (
               <Image
-                src={session.user.image}
+                src={(session?.user as any)?.image}
                 alt={formData.name || 'Profile'}
                 width={96}
                 height={96}

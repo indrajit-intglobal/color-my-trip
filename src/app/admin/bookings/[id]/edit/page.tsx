@@ -47,10 +47,16 @@ export default async function EditBookingPage({ params }: { params: { id: string
     notFound()
   }
 
+  // Convert Prisma Decimal to number for the component
+  const bookingForForm = {
+    ...booking,
+    totalAmount: Number(booking.totalAmount),
+  }
+
   return (
     <div>
       <h1 className="text-3xl font-bold mb-8">Edit Booking</h1>
-      <EditBookingForm booking={booking} />
+      <EditBookingForm booking={bookingForForm} />
     </div>
   )
 }
