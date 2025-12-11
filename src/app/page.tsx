@@ -1,3 +1,7 @@
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+
 import { redirect } from 'next/navigation'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
@@ -11,8 +15,6 @@ import { HeroSlider } from '@/components/public/hero-slider'
 import { formatCurrency } from '@/lib/utils'
 import { RecaptchaProvider } from '@/components/public/recaptcha-provider'
 
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
 
 async function getFeaturedTours() {
   try {
