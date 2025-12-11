@@ -2,6 +2,9 @@ import { notFound } from 'next/navigation'
 import { prisma } from '@/lib/prisma'
 import { TourForm } from '@/components/admin/tour-form'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 async function getTour(id: string) {
   try {
     const tour = await prisma.tour.findUnique({

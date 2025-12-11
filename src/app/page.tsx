@@ -11,6 +11,9 @@ import { HeroSlider } from '@/components/public/hero-slider'
 import { formatCurrency } from '@/lib/utils'
 import { RecaptchaProvider } from '@/components/public/recaptcha-provider'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 async function getFeaturedTours() {
   try {
     const tours = await prisma.tour.findMany({

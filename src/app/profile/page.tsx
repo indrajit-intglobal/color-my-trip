@@ -5,6 +5,9 @@ import { prisma } from '@/lib/prisma'
 import { ProfileForm } from '@/components/public/profile-form'
 import { UserBookings } from '@/components/public/user-bookings'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 async function getUserBookings(userId: string) {
   try {
     const bookings = await prisma.booking.findMany({

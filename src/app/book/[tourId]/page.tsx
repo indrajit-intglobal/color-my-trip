@@ -4,6 +4,9 @@ import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { BookingFlow } from '@/components/public/booking-flow'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 async function getTour(tourId: string) {
   try {
     const tour = await prisma.tour.findUnique({

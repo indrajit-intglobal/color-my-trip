@@ -1,5 +1,8 @@
 import { TourForm } from '@/components/admin/tour-form'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default function NewTourPage() {
   return (
     <div>

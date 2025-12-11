@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 // System prompt for the chatbot
 const SYSTEM_PROMPT = `You are a helpful travel assistant for GoFly Travel Agency. Your role is to assist customers with:
 - Information about tours and travel packages (you have access to current tour data)

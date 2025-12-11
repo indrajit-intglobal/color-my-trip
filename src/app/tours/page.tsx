@@ -3,6 +3,9 @@ import Image from 'next/image'
 import { ToursList } from '@/components/public/tours-list'
 import { ToursFilters } from '@/components/public/tours-filters'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default function ToursPage({
   searchParams,
 }: {

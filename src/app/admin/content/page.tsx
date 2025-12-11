@@ -2,6 +2,9 @@ import { prisma } from '@/lib/prisma'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { ContentEditor } from '@/components/admin/content-editor'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 async function getContent() {
   try {
     const [hero, testimonials, faq] = await Promise.all([

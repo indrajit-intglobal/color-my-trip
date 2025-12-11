@@ -5,6 +5,9 @@ import { Badge } from '@/components/ui/badge'
 import { formatCurrency, formatDate } from '@/lib/utils'
 import { BookingActions } from '@/components/admin/booking-actions'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 async function getBooking(id: string) {
   try {
     if (!id || id.trim() === '') {

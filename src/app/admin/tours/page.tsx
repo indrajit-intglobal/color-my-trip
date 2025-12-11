@@ -2,6 +2,9 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ToursTable } from '@/components/admin/tours-table'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default function AdminToursPage() {
   return (
     <div>

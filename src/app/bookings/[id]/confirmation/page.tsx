@@ -9,6 +9,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { PrintButton } from '@/components/public/print-button'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 async function getBooking(bookingId: string, userId: string) {
   try {
     const booking = await prisma.booking.findUnique({

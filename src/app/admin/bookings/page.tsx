@@ -1,5 +1,8 @@
 import { BookingsTable } from '@/components/admin/bookings-table'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default function AdminBookingsPage() {
   return (
     <div>

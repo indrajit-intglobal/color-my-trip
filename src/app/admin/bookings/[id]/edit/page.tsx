@@ -4,6 +4,9 @@ import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { EditBookingForm } from '@/components/admin/edit-booking-form'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 async function getBooking(id: string) {
   try {
     const booking = await prisma.booking.findUnique({

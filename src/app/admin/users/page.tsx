@@ -2,6 +2,9 @@ import { prisma } from '@/lib/prisma'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 async function getUsers() {
   try {
     const users = await prisma.user.findMany({

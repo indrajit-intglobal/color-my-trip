@@ -4,6 +4,9 @@ import { sendEmail } from '@/lib/email'
 import { getPasswordResetEmail } from '@/lib/email-templates'
 import crypto from 'crypto'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()

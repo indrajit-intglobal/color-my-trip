@@ -9,6 +9,9 @@ import { formatCurrency, formatDate } from '@/lib/utils'
 import { TourDetailClient } from '@/components/public/tour-detail-client'
 import { TourImageGallery } from '@/components/public/tour-image-gallery'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 async function getTour(slug: string) {
   try {
     const tour = await prisma.tour.findUnique({
