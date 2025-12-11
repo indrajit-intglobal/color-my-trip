@@ -1,0 +1,200 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  CUSTOMER
+  ADMIN
+}
+
+enum TourCategory {
+  ADVENTURE
+  FAMILY
+  HONEYMOON
+  WEEKEND
+  CULTURAL
+  OTHER
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+enum MessageStatus {
+  NEW
+  READ
+  ARCHIVED
+}
+
+model User {
+  id           String    @id @default(cuid())
+  name         String
+  email        String    @unique
+  passwordHash String    @map("password_hash")
+  role         UserRole  @default(CUSTOMER)
+  phone        String?
+  emailVerified Boolean  @default(false) @map("email_verified")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  bookings            Booking[]
+  reviews             Review[]
+  passwordResetTokens PasswordResetToken[]
+
+  @@map("users")
+}
+
+model Tour {
+  id             String        @id @default(cuid())
+  title          String
+  slug           String        @unique
+  locationCountry String       @map("location_country")
+  locationCity  String        @map("location_city")
+  category       TourCategory
+  durationDays   Int           @map("duration_days")
+  basePrice      Decimal       @map("base_price") @db.Decimal(10, 2)
+  discountPrice  Decimal?      @map("discount_price") @db.Decimal(10, 2)
+  maxGroupSize   Int           @map("max_group_size")
+  description    String        @db.Text
+  highlights     Json          // Array of strings
+  itinerary      Json          // Array of day objects
+  isPublished    Boolean       @default(false) @map("is_published")
+  seoTitle        String?      @map("seo_title")
+  seoDescription  String?      @map("seo_description") @db.Text
+  createdAt      DateTime      @default(now()) @map("created_at")
+  updatedAt      DateTime      @updatedAt @map("updated_at")
+
+  images   TourImage[]
+  bookings Booking[]
+  reviews  Review[]
+
+  @@map("tours")
+}
+
+model TourImage {
+  id                String   @id @default(cuid())
+  tourId            String   @map("tour_id")
+  cloudinaryPublicId String  @map("cloudinary_public_id")
+  secureUrl         String   @map("secure_url")
+  altText           String?  @map("alt_text")
+  sortOrder         Int      @default(0) @map("sort_order")
+  createdAt         DateTime @default(now()) @map("created_at")
+
+  tour Tour @relation(fields: [tourId], references: [id], onDelete: Cascade)
+
+  @@map("tour_images")
+}
+
+model Booking {
+  id              String        @id @default(cuid())
+  userId          String        @map("user_id")
+  tourId          String        @map("tour_id")
+  startDate       DateTime      @map("start_date")
+  endDate         DateTime      @map("end_date")
+  adults          Int           @default(1)
+  children        Int           @default(0)
+  totalAmount     Decimal       @map("total_amount") @db.Decimal(10, 2)
+  currency        String        @default("INR")
+  paymentStatus   PaymentStatus @default(PENDING) @map("payment_status")
+  bookingStatus   BookingStatus @default(PENDING) @map("booking_status")
+  specialRequests String?       @map("special_requests") @db.Text
+  createdAt       DateTime      @default(now()) @map("created_at")
+  updatedAt       DateTime      @updatedAt @map("updated_at")
+
+  user    User     @relation(fields: [userId], references: [id])
+  tour    Tour     @relation(fields: [tourId], references: [id])
+  payment Payment?
+
+  @@map("bookings")
+}
+
+model Payment {
+  id                String   @id @default(cuid())
+  bookingId         String   @unique @map("booking_id")
+  provider           String   @default("STRIPE")
+  providerPaymentId String?  @map("provider_payment_id")
+  amount            Decimal  @db.Decimal(10, 2)
+  currency          String   @default("INR")
+  status            String
+  rawResponse       Json?    @map("raw_response")
+  createdAt         DateTime @default(now()) @map("created_at")
+
+  booking Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+  @@map("payments")
+}
+
+model Review {
+  id         String   @id @default(cuid())
+  tourId     String   @map("tour_id")
+  userId     String   @map("user_id")
+  rating     Int      // 1-5
+  comment    String   @db.Text
+  isApproved Boolean  @default(false) @map("is_approved")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  tour Tour @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([tourId, userId])
+  @@map("reviews")
+}
+
+model ContactMessage {
+  id        String        @id @default(cuid())
+  name      String
+  email     String
+  message   String        @db.Text
+  status    MessageStatus @default(NEW)
+  createdAt DateTime      @default(now()) @map("created_at")
+
+  @@map("contact_messages")
+}
+
+model HomepageContent {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  content   Json
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("homepage_content")
+}
+
+model Settings {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     Json
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("settings")
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String   @map("user_id")
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("password_reset_tokens")
+}
+
